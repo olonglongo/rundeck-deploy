@@ -1,0 +1,102 @@
+- defaultTab: output
+  description: manage_k8s_pod
+  executionEnabled: true
+  group: z-ops
+  id: 732d027e-c138-4aa4-ab0e-3cddaa07f62b
+  loglevel: INFO
+  name: manage_k8s_pod
+  nodeFilterEditable: false
+  notification:
+    onfailure:
+      plugin:
+        configuration:
+          _noSSLVerification: ''
+          _printResponseToFile: ''
+          _proxySettings: ''
+          authentication: None
+          body: "{\n    \"msgtype\": \"link\", \n    \"link\": {\n        \"text\"\
+            : \"${option.env_name} / ${execution.user}\\n${option.action} ${option.app_name}\"\
+            ,\n        \"title\": \"${job.name} 执行失败\",\n        \"messageUrl\": \"\
+            ${execution.href}\"\n    }\n}"
+          contentType: application/json
+          file: ''
+          headers: ''
+          method: POST
+          oauthTokenEndpoint: ''
+          oauthValidateEndpoint: ''
+          password: ''
+          proxyIP: ''
+          proxyPort: ''
+          remoteUrl: 
+          timeout: '30000'
+          username: ''
+        type: HttpNotification
+    onsuccess:
+      plugin:
+        configuration:
+          _noSSLVerification: ''
+          _printResponseToFile: ''
+          _proxySettings: ''
+          authentication: None
+          body: "{\n    \"msgtype\": \"link\", \n    \"link\": {\n        \"text\"\
+            : \"${option.env_name} / ${execution.user}\\n${option.action} ${option.app_name}\"\
+            ,\n        \"title\": \"${job.name} 执行成功\",\n        \"messageUrl\": \"\
+            ${execution.href}\"\n    }\n}"
+          contentType: application/json
+          file: ''
+          headers: ''
+          method: POST
+          oauthTokenEndpoint: ''
+          oauthValidateEndpoint: ''
+          password: ''
+          proxyIP: ''
+          proxyPort: ''
+          remoteUrl: 
+          timeout: '30000'
+          username: ''
+        type: HttpNotification
+  notifyAvgDurationThreshold: null
+  options:
+  - label: 应用名称
+    name: app_name
+    required: true
+  - enforced: true
+    label: 环境名称
+    name: env_name
+    value: test-1
+    values:
+    - test-1
+    - test-2
+    - test-3
+    - test-4
+    - test-5
+    valuesListDelimiter: ','
+  - enforced: true
+    label: 执行操作
+    name: action
+    required: true
+    value: restart
+    values:
+    - restart
+    - scale
+    valuesListDelimiter: ','
+  - label: POD数量
+    name: scale_num
+    values:
+    - '0'
+    - '1'
+    - '2'
+    - '3'
+    - '4'
+    valuesListDelimiter: ','
+  plugins:
+    ExecutionLifecycle: null
+  scheduleEnabled: true
+  sequence:
+    commands:
+    - script: |-
+        #!/bin/bash
+        source /opt/data/manage_pod.sh
+    keepgoing: false
+    strategy: node-first
+  uuid: 732d027e-c138-4aa4-ab0e-3cddaa07f62b
