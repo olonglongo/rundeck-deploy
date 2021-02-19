@@ -1,0 +1,4 @@
+#!/bin/sh
+GIT_ADDRESS=ssh://git@54.222.190.196:2222/source/turing-blackbox.git
+BUILDER=harbor.test.wbfutures.xyz/base/maven:3.6.3
+BUILDER_OPTS="-f pom.xml -B -U -DskipDockerBuild=True -DskipDockerTag=True -DskipDockerPush=true -DskipTests clean package"

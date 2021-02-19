@@ -1,0 +1,100 @@
+- defaultTab: output
+  description: demo-server
+  executionEnabled: true
+  group: k8s
+  id: 99de972c-69ee-4405-a3b2-b7e48aa9c807
+  loglevel: INFO
+  name: demo-server
+  nodeFilterEditable: false
+  notification:
+    onfailure:
+      plugin:
+        configuration:
+          _noSSLVerification: ''
+          _printResponseToFile: ''
+          _proxySettings: ''
+          authentication: None
+          body: "{\n    \"msgtype\": \"link\", \n    \"link\": {\n        \"text\"\
+            : \"${option.env_name} / ${execution.user} \\n${option.git_version} \\\
+            n@weimeilong check pls.\",\n        \"title\": \"${job.name} 部署失败\",\n\
+            \        \"messageUrl\": \"${execution.href}\"\n    }\n}"
+          contentType: application/json
+          file: ''
+          headers: ''
+          method: POST
+          oauthTokenEndpoint: ''
+          oauthValidateEndpoint: ''
+          password: ''
+          proxyIP: ''
+          proxyPort: ''
+          remoteUrl: 
+          timeout: '30000'
+          username: ''
+        type: HttpNotification
+    onsuccess:
+      plugin:
+        configuration:
+          _noSSLVerification: ''
+          _printResponseToFile: ''
+          _proxySettings: ''
+          authentication: None
+          body: "{\n    \"msgtype\": \"link\", \n    \"link\": {\n        \"text\"\
+            : \"${option.env_name} / ${execution.user} \\n${option.git_version}\"\
+            ,\n        \"title\": \"${job.name} 部署成功\",\n        \"messageUrl\": \"\
+            ${execution.href}\"\n    }\n}"
+          contentType: application/json
+          file: ''
+          headers: ''
+          method: POST
+          oauthTokenEndpoint: ''
+          oauthValidateEndpoint: ''
+          password: ''
+          proxyIP: ''
+          proxyPort: ''
+          remoteUrl: 
+          timeout: '30000'
+          username: ''
+        type: HttpNotification
+  notifyAvgDurationThreshold: null
+  options:
+  - enforced: true
+    label: 应用名称：
+    name: app_name
+    required: true
+    value: demo-server
+    values:
+    - demo-server
+    valuesListDelimiter: ','
+  - enforced: true
+    label: 部署环境：
+    name: env_name
+    required: true
+    value: test-1
+    values:
+    - test-1
+    - test-2
+    - test-3
+    valuesListDelimiter: ','
+  - label: 代码版本：
+    name: git_version
+    regex: '[a-zA-Z0-9-_.]+'
+    required: true
+    value: master
+  - enforced: true
+    hidden: true
+    label: 代码类型：
+    name: code_type
+    required: true
+    value: java
+    values:
+    - java
+    valuesListDelimiter: ','
+  plugins:
+    ExecutionLifecycle: null
+  scheduleEnabled: false
+  sequence:
+    commands:
+    - script: /opt/data/script/deploy
+    keepgoing: false
+    strategy: node-first
+  uuid: 99de972c-69ee-4405-a3b2-b7e48aa9c807

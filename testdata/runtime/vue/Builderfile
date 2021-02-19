@@ -1,0 +1,4 @@
+#!/bin/sh
+GIT_ADDRESS=ssh://git@phabricator.wbfutures.xyz:2222/source/web.git
+BUILDER=node:13.13.0-alpine3.11
+BUILDER_OPTS='"yarn run {{mode}}"'
